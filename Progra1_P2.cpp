@@ -10,8 +10,8 @@ void ejercicio01();
 void ejercicio02();
 void ejercicio03();
 
-/*void agregarRegistro01();
-void agregarRegistro02();
+void agregarRegistro01();
+/*void agregarRegistro02();
 void agregarRegistro03();
 
 void reporte01();
@@ -86,7 +86,7 @@ void ejercicio01(){
 
 			switch(i){
 				case '1':
-					//{agregarRegistro01();}
+					{agregarRegistro01();}
 					system("Pause");
 					system("cls");
 					goto MenuEjercicio01;
