@@ -11,12 +11,12 @@ void ejercicio02();
 void ejercicio03();
 
 void agregarRegistro01();
-/*void agregarRegistro02();
-void agregarRegistro03();
+void agregarRegistro02();
+//void agregarRegistro03();
 
 void reporte01();
 void reporte02();
-void reporte03();*/
+//void reporte03();
 
 int main()
 {
@@ -75,9 +75,8 @@ void ejercicio01(){
 			cout<<"------ Menu  Garita ------"<<endl;
 			cout<<"--------------------------"<<endl;
 			cout<<"1 - Ingresar registro"<<endl;
-			cout<<"2 - Generar reporte"<<endl;
 			cout<<"-------------------"<<endl;
-			cout<<"3 - Regresar a menu principal"<<endl;
+			cout<<"2 - Regresar a menu principal"<<endl;
 			cout<<"-------------------"<<endl;
 			cout<<"F - Salir"<<endl;
 			cout<<"-------------------"<<endl;
@@ -91,17 +90,12 @@ void ejercicio01(){
 					system("cls");
 					goto MenuEjercicio01;
 					break;
-				case '2':
-					//{reporte01();}
-					system("Pause");
-					system("cls");
-					goto MenuEjercicio01;
-					break;
-                case '3':
+                case '2':
                     break;
 				case 'F':
-					exit(1);
                 case 'f':
+					{reporte01();}
+					system("Pause");
                     exit(1);
 				default:
 					system("cls");
@@ -133,7 +127,7 @@ void ejercicio02(){
 
 			switch(i){
 				case 1:
-					//{agregarRegistro02();}
+					{agregarRegistro02();}
 					system("Pause");
 					system("cls");
 					goto MenuEjercicio02;
@@ -145,7 +139,7 @@ void ejercicio02(){
 					goto MenuEjercicio02;
 					break;
                 case 3:
-					//{reporte02();}
+					{reporte02();}
 					system("Pause");
 					system("cls");
 					goto MenuEjercicio02;
