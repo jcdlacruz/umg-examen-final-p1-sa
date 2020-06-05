@@ -12,13 +12,14 @@ void ejercicio03();
 
 void agregarRegistro01();
 void agregarRegistro02();
-//void agregarRegistro03();
+void agregarRegistro03();
 
 void descargarRegistro02();
+void descargarRegistro03();
 
 void reporte01();
 void reporte02();
-//void reporte03();
+void reporte03();
 
 int main()
 {
@@ -166,20 +167,21 @@ void ejercicio03(){
 			cout<<"----------------------------"<<endl;
 			cout<<"----- Menu Encomiendas -----"<<endl;
 			cout<<"----------------------------"<<endl;
-			cout<<"1 - Agregar entrega"<<endl;
-            cout<<"2 - Descargar entrega"<<endl;
-			cout<<"3 - Generar reporte"<<endl;
+			cout<<"1 - Agregar paquete"<<endl;
+            cout<<"2 - Descargar paquete"<<endl;
+			cout<<"3 - Realizar envio"<<endl;
+			cout<<"4 - Generar reporte"<<endl;
 			cout<<"----------------------------"<<endl;
-			cout<<"4 - Regresar a menu principal"<<endl;
+			cout<<"5 - Regresar a menu principal"<<endl;
 			cout<<"----------------------------"<<endl;
-			cout<<"5 - Salir"<<endl;
+			cout<<"6 - Salir"<<endl;
 			cout<<"----------------------------"<<endl;
 			cout<<"Seleccione su opcion: ";
 			cin>>i;
 
 			switch(i){
 				case 1:
-					//{agregarRegistro03();}
+					{agregarRegistro03();}
 					system("Pause");
 					system("cls");
 					goto MenuEjercicio03;
@@ -190,15 +192,21 @@ void ejercicio03(){
 					system("cls");
 					goto MenuEjercicio03;
 					break;
-                case 3:
+				case 3:
 					//{reporte03();}
 					system("Pause");
 					system("cls");
 					goto MenuEjercicio03;
 					break;
-				case 4:
+                case 4:
+					{reporte03();}
+					system("Pause");
+					system("cls");
+					goto MenuEjercicio03;
 					break;
 				case 5:
+					break;
+				case 6:
 					exit(1);
 				default:
 					system("cls");
