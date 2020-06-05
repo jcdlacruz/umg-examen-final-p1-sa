@@ -15,9 +15,11 @@ struct Registro02{
     int cantidad;
     string fecha;
     Registro02* apuntador02;
-};
+} *inicio, *final;
 
-struct Registro02* head02;
+Registro02 *inic = NULL;
+
+//struct Registro02* head02;
 struct inFecha{
     unsigned int y, m, d;
 };
@@ -56,7 +58,7 @@ void agregarRegistro02(){
 			goto InicioRegistro02;
 		}
 
-        head02 = NULL;
+        //head02 = NULL;
         string codigo;
         string descripcion;
         char opcion;
@@ -74,7 +76,8 @@ void agregarRegistro02(){
 		for(int i = 0; i < registros02; i ++){
             system("cls");
 
-            struct Registro02* temp02 = new Registro02();
+            //struct Registro02* temp02 = new Registro02();
+            Registro02 *temp02 = new Registro02();
             bandera = 0;
 
             cout<<"Ingreso de datos para el producto: "<<i+1<<endl;
@@ -158,15 +161,30 @@ void agregarRegistro02(){
                     }
                     
                     if(bandera == 0){
+
+                        descripcion = regex_replace(descripcion, regex("\\s+"), "_");
+                        descripcion = regex_replace(descripcion, regex("\\W+"), "");
+
                         temp02->codigo = codigo;
                         temp02->descripcion = descripcion;
                         temp02->precio = precio;
                         temp02->cantidad = cantidad;
                         temp02->fecha = fecha;
-                        temp02->apuntador02 = NULL;
-                        if(head02 != NULL)
+                        //temp02->apuntador02 = NULL;
+                        /*if(head02 != NULL)
                             temp02->apuntador02 = head02;
-                        head02 = temp02;
+                        head02 = temp02;*/
+                        /*if(inicio == NULL){
+                            inicio = temp02;
+                            inicio -> apuntador02 = NULL;
+                            final = inicio;
+                        }else{
+                            final -> apuntador02 = temp02;
+                            temp02 -> apuntador02 = NULL;
+                            final = temp02;
+                        }*/
+                        temp02->apuntador02 = inic;
+                        inic = temp02;
                     }
                 }
             }
@@ -180,14 +198,17 @@ void agregarRegistro02(){
         }
         system("CLS");
 
-        struct Registro02* temp = head02;
-        while(temp != NULL ){
-            archivo<<temp->codigo<<'\t'
-            <<temp->descripcion<<'\t'
-            <<temp->precio<<'\t'
-            <<temp->cantidad<<'\t'
-            <<temp->fecha<<endl;
-            temp = temp->apuntador02;
+        //struct Registro02* temp = head02;
+        //Registro02 *actual = new Registro02();
+        //actual = inicio;
+        Registro02 *actual = inic;
+        while(actual != NULL ){
+            archivo<<actual->codigo<<'\t'
+            <<actual->descripcion<<'\t'
+            <<actual->precio<<'\t'
+            <<actual->cantidad<<'\t'
+            <<actual->fecha<<endl;
+            actual = actual->apuntador02;
         }
 
         archivo.close();
@@ -216,24 +237,55 @@ void reporte02(){
      int cantidad;
      string fecha;
 
-	 struct Registro02* temp02 = head02;
-
+	 //struct Registro02* temp02 = head02;
+     //Registro02 *actual02 = new Registro02();
+     //actual02 = inicio; 
+     Registro02 *actual02 = inic;
      cout<<"*Trabajando con datos en memoria."<<endl;
 	 cout<<"------------------------"<<endl;
 	 cout<<"        Reporte         "<<endl;
      cout<<"     de inventario      "<<endl;
 	 cout<<"------------------------"<<endl;
-     cout<<"No. | Codigo | Descripcion | Precio | Cantidad  | Ingreso " <<endl;
-     while(temp02 != NULL ){
-         cont++;
-         codigo = temp02->codigo;
-         descripcion = temp02->descripcion;
-         precio = temp02->precio;
-         cantidad = temp02->cantidad;
-         fecha = temp02->fecha;
-         temp02 = temp02->apuntador02;
+     if(inic != NULL){
+        cout<<"No. | Codigo | Descripcion | Precio | Cantidad  | Ingreso " <<endl;
+     
+        while(actual02 != NULL ){
+            cont++;
+            codigo = actual02->codigo;
+            descripcion = actual02->descripcion;
+            precio = actual02->precio;
+            cantidad = actual02->cantidad;
+            fecha = actual02->fecha;
+            actual02 = actual02->apuntador02;
 
-         cout<<cont<<"\t"<<codigo<<"\t"<<descripcion<<"\t"<<precio
-             <<"\t"<<cantidad<<"\t"<<fecha<<endl;
+            descripcion = regex_replace(descripcion, regex("_"), " ");
+
+            cout<<cont<<"\t"<<codigo<<"\t"<<descripcion<<"\t"<<precio
+                <<"\t"<<cantidad<<"\t"<<fecha<<endl;
+        }
+     }else{
+         cout<<"Actualmente no existe inventario."<<endl;
      }
+};
+
+void descargarRegistro02(){
+    reporte02();
+    cout<<endl;
+    if(inic == NULL){
+        cout<<"Ingrese inventario por medio de la opcion 1 - Cargar inventario."<<endl;
+    }else{
+        char opcion;
+        cout<<"Se descargara/eliminara el ultimo producto ingresado a inventario."<<endl;
+        cout<<"Esta seguro que desea continuar (s/n)?"<<endl;
+        cin>>opcion;
+
+        opcion = toupper(opcion);
+
+        if(opcion == 'S'){
+            Registro02 *pop = inic;
+            inic = inic -> apuntador02;
+            delete(pop);
+            cout<<"Producto eliminado de inventario."<<endl;        
+        }
+    }
 };

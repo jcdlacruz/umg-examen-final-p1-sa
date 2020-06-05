@@ -14,6 +14,8 @@ void agregarRegistro01();
 void agregarRegistro02();
 //void agregarRegistro03();
 
+void descargarRegistro02();
+
 void reporte01();
 void reporte02();
 //void reporte03();
@@ -133,7 +135,7 @@ void ejercicio02(){
 					goto MenuEjercicio02;
 					break;
 				case 2:
-					//{reporte02();}
+					{descargarRegistro02();}
 					system("Pause");
 					system("cls");
 					goto MenuEjercicio02;
