@@ -14,10 +14,20 @@ struct Registro03{
     string direccion;
     int estado;
     float peso;
-    Registro03* apuntador03;
+    Registro03 *apuntador03;
+} *inici, *fi;
+
+struct  listaEnvio{
+    string producto;
+    listaEnvio *apuntadorEnvio;
 };
 
-struct Registro03* head03;
+struct listaEnvio* headEnvio;
+
+
+bool searchInventario(const string &b);
+bool searchListaEnvio(const string &l);
+void agregarEnvio(const string code);
 
 void agregarRegistro03(){
 	InicioRegistro03:
@@ -51,7 +61,6 @@ void agregarRegistro03(){
 			goto InicioRegistro03;
 		}
 
-        head03 = NULL;
         string codigo;
         string nombre;
         string direccion;
@@ -62,7 +71,8 @@ void agregarRegistro03(){
 		for(int i = 0; i < registros03; i ++){
             system("cls");
 
-            struct Registro03* temp03 = new Registro03();
+            Registro03 *nuevo = new Registro03(); 
+
             bandera = 0;
 
             cout<<"Ingreso de datos para el producto: "<<i+1<<endl;
@@ -98,15 +108,21 @@ void agregarRegistro03(){
                 direccion = regex_replace(direccion, regex("\\s+"), "_");
                 direccion = regex_replace(direccion, regex("\\W+"), "");
 
-                temp03->codigo = codigo;
-                temp03->nombre = nombre;
-                temp03->direccion = direccion;
-                temp03->estado = 1;
-                temp03->peso = peso;
-                temp03->apuntador03 = NULL;
-                if(head03 != NULL)
-                    temp03->apuntador03 = head03;
-                head03 = temp03;
+                nuevo->codigo = codigo;
+                nuevo->nombre = nombre;
+                nuevo->direccion = direccion;
+                nuevo->estado = 1;
+                nuevo->peso = peso;
+                if(inici == NULL){
+                    inici = nuevo;
+                    inici->apuntador03=NULL;
+                    fi = inici;
+
+                }else{
+                    fi -> apuntador03 = nuevo;
+                    nuevo -> apuntador03 = NULL;
+                    fi = nuevo;
+                }
             }
 		}
 
@@ -118,7 +134,8 @@ void agregarRegistro03(){
         }
         system("CLS");
 
-        struct Registro03* temp = head03;
+        Registro03 *temp = new Registro03();
+        temp = inici;
         while(temp != NULL ){
             archivo<<temp->codigo<<'\t'
             <<temp->nombre<<'\t'
@@ -144,8 +161,10 @@ void reporte03(){
      float peso;
      int cont = 0;
      string mensaje;
+     bool enListaDeEnvio = false;
 
-	 struct Registro03* temp03 = head03;
+     Registro03 *temp03 = new Registro03();
+     temp03 = inici;
 
      if(temp03 != NULL){
         cout<<"*Trabajando con datos en memoria."<<endl;
@@ -171,6 +190,11 @@ void reporte03(){
                 mensaje = "Cargado";
             }else{mensaje = "Descargado";}
 
+            enListaDeEnvio = searchListaEnvio(codigo);
+            if(enListaDeEnvio == true){
+                mensaje = "En lista de envio";
+            }
+
             cout<<cont<<"\t"<<codigo<<"\t"<<nombre<<"\t"<<direccion
                 <<"\t"<<peso<<"\t"<<mensaje<<endl;
         }
@@ -179,24 +203,186 @@ void reporte03(){
     }
 };
 
-/*void descargarRegistro02(){
-    reporte02();
-    cout<<endl;
-    if(inic == NULL){
-        cout<<"Ingrese inventario por medio de la opcion 1 - Cargar inventario."<<endl;
-    }else{
+void descargarRegistro03(){
+    MenuDescargarRegistro03:
+        reporte03();
+        cout<<endl;
+        
+        Registro03 *actual = new Registro03();
+        actual = inici;
+        bool flag = false;
+        string buscar;
         char opcion;
-        cout<<"Se descargara/eliminara el ultimo producto ingresado a inventario."<<endl;
-        cout<<"Esta seguro que desea continuar (s/n)?"<<endl;
-        cin>>opcion;
 
-        opcion = toupper(opcion);
+        if(inici != NULL){
+            cout<<"Presione ENTER para continuar."<<endl;
+            cin.ignore();
+            cout<<"Ingrese codigo del paquete a descargar: "<<endl;
+            getline(cin,buscar);
 
-        if(opcion == 'S'){
-            Registro02 *pop = inic;
-            inic = inic -> apuntador02;
-            delete(pop);
-            cout<<"Producto eliminado de inventario."<<endl;        
+            while(actual != NULL && flag != true){
+                if(actual-> codigo == buscar){
+                    if(actual -> estado == 1 && searchListaEnvio(buscar) == false){
+                        cout<<"Paquete con codigo "<<buscar<<", encontrado."<<endl;
+                        cout<<"Presione ENTER para continuar."<<endl;
+                        
+                        cin.ignore();
+                        cout<<"Esta seguro que quiere descargar el paquete de inventario (s/n)?";
+                        cin>>opcion;
+
+                        opcion = toupper(opcion);
+                        if(opcion == 'S'){
+                            actual ->estado = 0;
+                            cout<<"El paquete fue descargado de inventario exitosamente."<<endl;
+                            flag = true;
+                        }else{
+                            cout<<"El paquete no fue modificado."<<endl;
+                            cout<<"Proceso finalizado."<<endl;
+                            flag = true;
+                        }
+                    }else{
+                        cout<<"El paquete ya se encuentra actualmente descargado de inventario o en listo para envio."<<endl;
+                        flag = true;
+                    }
+                }
+                actual = actual -> apuntador03;
+            }
+            if(!flag){
+                cout<<"Paquete no encontrado."<<endl;
+            }
         }
-    }
-};*/
+};
+
+void programaEnvio03(){
+    MenuProgramaEnvio03:
+        fflush(stdin);
+        system("CLS");
+
+        string codigo;
+        string nombre;
+        string direccion;
+        int estado;
+        float peso;
+        int cont = 0;
+        string mensaje;
+        string buscar;
+        bool existe = false;
+        bool enListaDeEnvio = false;
+        float pesoEnvio = 0;
+
+        Registro03 *actual02 = new Registro03();
+        actual02 = inici;
+
+        if(actual02 != NULL){
+            cout<<"*Trabajando con datos en memoria."<<endl;
+            cout<<"------------------------"<<endl;
+            cout<<"        Reporte         "<<endl;
+            cout<<"     de inventario      "<<endl;
+            cout<<"------------------------"<<endl;
+            cout<<"No. | Codigo |      Nombre      |       Direccion       | Peso  | Estado " <<endl;
+        
+            while(actual02 != NULL ){
+                if(actual02->estado == 1){
+                    cont++;
+                    codigo = actual02->codigo;
+                    nombre = actual02->nombre;
+                    direccion = actual02->direccion;
+                    peso = actual02->peso;
+                    estado = actual02->estado;
+
+                    nombre = regex_replace(nombre, regex("_"), " ");
+                    direccion = regex_replace(direccion, regex("_"), " ");
+
+                    if(estado == 1){
+                        mensaje = "Cargado";
+                    }else{mensaje = "Descargado";}
+
+                    enListaDeEnvio = searchListaEnvio(codigo);
+                    if(enListaDeEnvio == true){
+                        mensaje = "En lista de envio";
+                        pesoEnvio += peso;
+                    }
+
+                    cout<<cont<<"\t"<<codigo<<"\t"<<nombre<<"\t"<<direccion
+                        <<"\t"<<peso<<"\t"<<mensaje<<endl;
+                }
+                actual02 = actual02 -> apuntador03;
+            }
+            if(cont == 0){
+                cout<<"Actualmente no existe paquetes listos para envio."<<endl;
+            }else{
+                cout<<"Peso total del envio actual: "<<pesoEnvio<<endl;
+                
+                if(pesoEnvio >= 1000){
+                    cout<<"No es posible agregar paquetes al envio, el peso maximo es 1000lb."<<endl;
+                }else{
+                    cout<<endl;
+                    cout<<"Ingrese codigo de paquete a enviar:";
+                    getline(cin, buscar);
+
+                    existe = searchInventario(buscar);
+                    if(existe == true){
+                        existe = searchListaEnvio(buscar);
+                        if(existe == false){
+                            if((pesoEnvio + peso) >= 1000){
+                                cout<<"El producto no puede ser agregado, ya que excede el total del peso maximo del envio (Peso maximo total 1000lb)."<<endl;
+                            }else{
+                                agregarEnvio(buscar);
+                                cout<<"Paquete agregado exitosamente."<<endl;
+                            }
+                        }else{
+                            cout<<"El paquete ya se encuentra agregado a la lista de envio."<<endl;
+                        }
+                    }else{
+                        cout<<"El codigo de paquete no existe en inventario. Intentelo de nuevo."<<endl;
+                    }
+                }
+            }
+        }else{
+            cout<<"Actualmente no existe inventario."<<endl;
+        }
+};
+
+bool searchInventario(const string &b){
+    Registro03 *buscar = new Registro03();
+    buscar = inici;
+    bool flag = false;
+
+	if(inici != NULL){
+		while(buscar !=NULL && flag != true){
+			if(buscar->codigo == b){
+				flag = true;
+			}
+			buscar = buscar->apuntador03;
+		}
+	}else{
+		flag = false;
+	}
+    return flag;
+};
+
+bool searchListaEnvio(const string &l){
+    struct listaEnvio* temp = headEnvio;
+    bool flag = false;
+
+	if(temp != NULL){
+		while(temp !=NULL && flag != true){
+			if(temp->producto == l){
+				flag = true;
+			}
+			temp = temp->apuntadorEnvio;
+		}
+	}else{
+		flag = false;
+	}
+    return flag;
+};
+
+void agregarEnvio(const string code){
+    struct listaEnvio* temp = new listaEnvio();
+    temp-> producto = code;
+    temp->apuntadorEnvio = NULL;
+    if(headEnvio != NULL)
+        temp->apuntadorEnvio = headEnvio;
+    headEnvio = temp;
+};

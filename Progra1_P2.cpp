@@ -21,6 +21,8 @@ void reporte01();
 void reporte02();
 void reporte03();
 
+void programaEnvio03();
+
 int main()
 {
     mp();
@@ -169,7 +171,7 @@ void ejercicio03(){
 			cout<<"----------------------------"<<endl;
 			cout<<"1 - Agregar paquete"<<endl;
             cout<<"2 - Descargar paquete"<<endl;
-			cout<<"3 - Realizar envio"<<endl;
+			cout<<"3 - Programar envio"<<endl;
 			cout<<"4 - Generar reporte"<<endl;
 			cout<<"----------------------------"<<endl;
 			cout<<"5 - Regresar a menu principal"<<endl;
@@ -187,13 +189,13 @@ void ejercicio03(){
 					goto MenuEjercicio03;
 					break;
 				case 2:
-					//{reporte03();}
+					{descargarRegistro03();}
 					system("Pause");
 					system("cls");
 					goto MenuEjercicio03;
 					break;
 				case 3:
-					//{reporte03();}
+					{programaEnvio03();}
 					system("Pause");
 					system("cls");
 					goto MenuEjercicio03;
