@@ -36,8 +36,9 @@ void agregarRegistro03(){
 		fflush(stdin);
 		system("CLS");
 		cout<<"Archivo default: entrega.txt"<<endl;
-		cout<<"Indique nombre de archivo: ";
-		getline(cin,nombreArchivo);
+		//cout<<"Indique nombre de archivo: ";
+		//getline(cin,nombreArchivo);
+        nombreArchivo = "entrega.txt";
 		archivo.open(nombreArchivo.c_str(),ios::app);
 
 		if(archivo.fail()){
@@ -126,7 +127,7 @@ void agregarRegistro03(){
             }
 		}
 
-        archivo.open(nombreArchivo.c_str(),ios::app);
+        archivo.open(nombreArchivo.c_str(),ios::trunc);
         if(archivo.fail()){
             archivo.close();
             cout<<"No se pudo abrir el archivo";
@@ -227,7 +228,7 @@ void descargarRegistro03(){
                         cout<<"Presione ENTER para continuar."<<endl;
                         
                         cin.ignore();
-                        cout<<"Esta seguro que quiere descargar el paquete de inventario (s/n)?";
+                        cout<<"Esta seguro que desea descargar el paquete de inventario (s/n)?";
                         cin>>opcion;
 
                         opcion = toupper(opcion);
@@ -313,7 +314,7 @@ void programaEnvio03(){
             }else{
                 cout<<"Peso total del envio actual: "<<pesoEnvio<<endl;
                 
-                if(pesoEnvio >= 1000){
+                if(pesoEnvio > 1000){
                     cout<<"No es posible agregar paquetes al envio, el peso maximo es 1000lb."<<endl;
                 }else{
                     cout<<endl;
@@ -324,7 +325,7 @@ void programaEnvio03(){
                     if(existe == true){
                         existe = searchListaEnvio(buscar);
                         if(existe == false){
-                            if((pesoEnvio + peso) >= 1000){
+                            if((pesoEnvio + peso) > 1000){
                                 cout<<"El producto no puede ser agregado, ya que excede el total del peso maximo del envio (Peso maximo total 1000lb)."<<endl;
                             }else{
                                 agregarEnvio(buscar);
@@ -385,4 +386,61 @@ void agregarEnvio(const string code){
     if(headEnvio != NULL)
         temp->apuntadorEnvio = headEnvio;
     headEnvio = temp;
+};
+
+void reporteEnvio(){
+    fflush(stdin);
+	 system("CLS");
+
+     string codigo;
+     string nombre;
+     string direccion;
+     int estado;
+     float peso;
+     int cont = 0;
+     string mensaje;
+     bool enListaDeEnvio = false;
+     float pesoTotal = 0;
+
+     Registro03 *temp03 = new Registro03();
+     temp03 = inici;
+
+     if(temp03 != NULL){
+        cout<<"*Trabajando con datos en memoria."<<endl;
+        cout<<"------------------------"<<endl;
+        cout<<"        Reporte         "<<endl;
+        cout<<"        de envio        "<<endl;
+        cout<<"------------------------"<<endl;
+        cout<<"No. | Codigo |      Nombre      |       Direccion       | Peso  | Estado " <<endl;
+     
+        while(temp03 != NULL ){
+            cont++;
+            codigo = temp03->codigo;
+            nombre = temp03->nombre;
+            direccion = temp03->direccion;
+            peso = temp03->peso;
+            estado = temp03->estado;
+            temp03 = temp03->apuntador03;
+
+            nombre = regex_replace(nombre, regex("_"), " ");
+            direccion = regex_replace(direccion, regex("_"), " ");
+
+            if(estado == 1){
+                mensaje = "Cargado";
+            }else{mensaje = "Descargado";}
+
+            enListaDeEnvio = searchListaEnvio(codigo);
+            if(enListaDeEnvio == true){
+                mensaje = "En lista de envio";
+                cout<<cont<<"\t"<<codigo<<"\t"<<nombre<<"\t"<<direccion
+                <<"\t"<<peso<<"\t"<<mensaje<<endl;
+
+                pesoTotal += peso;
+            }
+        }
+        cout<<endl;
+        cout<<"Peso total del envio: "<<pesoTotal<<"lb"<<endl;
+    }else{
+        cout<<"Actualmente no existe inventario."<<endl;
+    }
 };

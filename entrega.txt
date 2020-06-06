@@ -1,0 +1,8 @@
+Pedro_Almodobar	29_avenida_18_00_zona_19_Xela	1	250
+2	Cleopatra_Guzman	4ta_calle_15_20_zona_15_Villa_Canales	1	100
+3	Pedro_Infante	9_avenida_25_50_zona_1_Guatemala	1	650
+4	Juana_de_Arco	14_calle_10_20_zona_2_Mixco	1	800
+5	Pin_Plata	9_avenida_15_25_zona_11_Campos_del_Roosvelt	1	250
+6	Nahomy_Campbell	5_calle_Miami_Florida_Postal_101587	1	300
+7	Michael_Jordan	13_Calle_Melon_Park_New_York_Postal_10005210	1	100
+8	Mohammed_Ali	4ta_avenida_Edificio_Atzul_Florida_Boulevar	1	200

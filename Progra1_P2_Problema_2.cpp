@@ -19,7 +19,6 @@ struct Registro02{
 
 Registro02 *inic = NULL;
 
-//struct Registro02* head02;
 struct inFecha{
     unsigned int y, m, d;
 };
@@ -33,8 +32,9 @@ void agregarRegistro02(){
 		fflush(stdin);
 		system("CLS");
 		cout<<"Archivo default: inventario.txt"<<endl;
-		cout<<"Indique nombre de archivo: ";
-		getline(cin,nombreArchivo);
+		//cout<<"Indique nombre de archivo: ";
+		//getline(cin,nombreArchivo);
+        nombreArchivo = "inventario.txt"; 
 		archivo.open(nombreArchivo.c_str(),ios::app);
 
 		if(archivo.fail()){
@@ -58,7 +58,6 @@ void agregarRegistro02(){
 			goto InicioRegistro02;
 		}
 
-        //head02 = NULL;
         string codigo;
         string descripcion;
         char opcion;
@@ -76,7 +75,6 @@ void agregarRegistro02(){
 		for(int i = 0; i < registros02; i ++){
             system("cls");
 
-            //struct Registro02* temp02 = new Registro02();
             Registro02 *temp02 = new Registro02();
             bandera = 0;
 
@@ -149,10 +147,6 @@ void agregarRegistro02(){
                             system("Pause");
                         }
                         fecha = fechaIngresada;
-
-                        //cout<<"Datos a guardar:"<<endl;
-                        //cout<<codigo<<"|"<<descripcion<<"|"<<precio<<"|"<<cantidad<<"|"<<fecha<<"|"<<endl;
-                        
                     }else{
                         cout<<"Debe ingresar una opcion valida. Intentelo de nuevo."<<endl;
                         bandera = 1;
@@ -170,19 +164,6 @@ void agregarRegistro02(){
                         temp02->precio = precio;
                         temp02->cantidad = cantidad;
                         temp02->fecha = fecha;
-                        //temp02->apuntador02 = NULL;
-                        /*if(head02 != NULL)
-                            temp02->apuntador02 = head02;
-                        head02 = temp02;*/
-                        /*if(inicio == NULL){
-                            inicio = temp02;
-                            inicio -> apuntador02 = NULL;
-                            final = inicio;
-                        }else{
-                            final -> apuntador02 = temp02;
-                            temp02 -> apuntador02 = NULL;
-                            final = temp02;
-                        }*/
                         temp02->apuntador02 = inic;
                         inic = temp02;
                     }
@@ -190,7 +171,7 @@ void agregarRegistro02(){
             }
 		}
 
-        archivo.open(nombreArchivo.c_str(),ios::app);
+        archivo.open(nombreArchivo.c_str(),ios::trunc);
         if(archivo.fail()){
             archivo.close();
             cout<<"No se pudo abrir el archivo";
@@ -198,9 +179,6 @@ void agregarRegistro02(){
         }
         system("CLS");
 
-        //struct Registro02* temp = head02;
-        //Registro02 *actual = new Registro02();
-        //actual = inicio;
         Registro02 *actual = inic;
         while(actual != NULL ){
             archivo<<actual->codigo<<'\t'
@@ -237,9 +215,6 @@ void reporte02(){
      int cantidad;
      string fecha;
 
-	 //struct Registro02* temp02 = head02;
-     //Registro02 *actual02 = new Registro02();
-     //actual02 = inicio; 
      Registro02 *actual02 = inic;
      cout<<"*Trabajando con datos en memoria."<<endl;
 	 cout<<"------------------------"<<endl;
@@ -275,6 +250,7 @@ void descargarRegistro02(){
         cout<<"Ingrese inventario por medio de la opcion 1 - Cargar inventario."<<endl;
     }else{
         char opcion;
+        string producto;
         cout<<"Se descargara/eliminara el ultimo producto ingresado a inventario."<<endl;
         cout<<"Esta seguro que desea continuar (s/n)?"<<endl;
         cin>>opcion;
@@ -284,8 +260,9 @@ void descargarRegistro02(){
         if(opcion == 'S'){
             Registro02 *pop = inic;
             inic = inic -> apuntador02;
+            producto = pop ->codigo;
             delete(pop);
-            cout<<"Producto eliminado de inventario."<<endl;        
+            cout<<"Producto "<<producto<<" eliminado de inventario."<<endl;        
         }
     }
 };

@@ -1,5 +1,6 @@
-5	Estuche_Avengers	15.5	100	20200605
-4	Marcadores_de_pizzaron_blanco	30	64	20200128
-3	Calculadora_Texas_Instrument_T81	190	25	20200605
-2	Papel_bond	28.95	225	20200520
-1	Lapiz	1.5	1500	20200605
+z0r1p98	Cuadernillo_Contable_de_2_columnas	10.8	20	20200605
+c002pr5	Resma_de_hojas_blancas_Prima	29.7	125	20200605
+01p	Marcadores_para_pizarron	15.25	20	20200605
+xy1	Juego_de_reglas	8	2	20200130
+b5	Borradores_Pelicano	3.25	50	20200605
+a1	Cuadernos_Norma_cuadricula	7.5	100	20200503

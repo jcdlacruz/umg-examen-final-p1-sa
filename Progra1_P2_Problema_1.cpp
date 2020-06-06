@@ -19,9 +19,10 @@ void agregarRegistro01(){
 		fflush(stdin);
 		system("CLS");
         cout<<"Archivo default: garita.txt"<<endl;
-		cout<<"Indique nombre de archivo: ";
-		getline(cin,nombreArchivo);
-		archivo.open(nombreArchivo.c_str(),ios::app);
+		//cout<<"Indique nombre de archivoc: ";
+		//getline(cin,nombreArchivo);
+		nombreArchivo = "garita.txt";
+        archivo.open(nombreArchivo.c_str(),ios::app);
 
 		if(archivo.fail()){
 			archivo.close();
@@ -39,6 +40,7 @@ void agregarRegistro01(){
         float kilometro = 0;
         float monto_tonelada = 0;
 
+        cout<<endl;
         cout<<"--------------------"<<endl;
         cout<<"  Tipo de vehiculo  "<<endl;
         cout<<"--------------------"<<endl;
@@ -110,7 +112,7 @@ void agregarRegistro01(){
         }
         tipo = i;
 
-		archivo.open(nombreArchivo.c_str(),ios::app);
+		archivo.open(nombreArchivo.c_str(),ios::trunc);
 		if(archivo.fail()){
 			archivo.close();
 			cout<<"No se pudo abrir el archivo";
@@ -135,9 +137,9 @@ void reporte01(){
 	 fflush(stdin);
 	 system("CLS");
      cout<<"Archivo default: garita.txt"<<endl;
-	 cout<<"Ingrese nombre del archivo: ";
-	 getline(cin, nombreArchivo);
-
+	 //cout<<"Ingrese nombre del archivo: ";
+	 //getline(cin, nombreArchivo);
+     nombreArchivo = "garita.txt";
 	 archivo.open(nombreArchivo.c_str(), ios::in);
 	 if(archivo.fail()){
 	 	cout<<"Se presento un error al intentar abrir el archivo.";

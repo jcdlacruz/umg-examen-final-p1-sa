@@ -23,6 +23,8 @@ void reporte03();
 
 void programaEnvio03();
 
+void reporteEnvio();
+
 int main()
 {
     mp();
@@ -172,11 +174,12 @@ void ejercicio03(){
 			cout<<"1 - Agregar paquete"<<endl;
             cout<<"2 - Descargar paquete"<<endl;
 			cout<<"3 - Programar envio"<<endl;
-			cout<<"4 - Generar reporte"<<endl;
+			cout<<"4 - Revisar envio"<<endl;
+			cout<<"5 - Generar reporte"<<endl;
 			cout<<"----------------------------"<<endl;
-			cout<<"5 - Regresar a menu principal"<<endl;
+			cout<<"6 - Regresar a menu principal"<<endl;
 			cout<<"----------------------------"<<endl;
-			cout<<"6 - Salir"<<endl;
+			cout<<"7 - Salir"<<endl;
 			cout<<"----------------------------"<<endl;
 			cout<<"Seleccione su opcion: ";
 			cin>>i;
@@ -200,15 +203,21 @@ void ejercicio03(){
 					system("cls");
 					goto MenuEjercicio03;
 					break;
-                case 4:
+				case 4:
+					{reporteEnvio();}
+					system("Pause");
+					system("cls");
+					goto MenuEjercicio03;
+					break;
+                case 5:
 					{reporte03();}
 					system("Pause");
 					system("cls");
 					goto MenuEjercicio03;
 					break;
-				case 5:
-					break;
 				case 6:
+					break;
+				case 7:
 					exit(1);
 				default:
 					system("cls");
